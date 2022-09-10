@@ -5,9 +5,6 @@ sg.theme("SandyBeach")
 
 # Define blocks' layout
 
-# Control Hub layout
-#controlHub = 
-
 # Processor 0, column layout
 processor0Col = [ [sg.Text(text="Processor #0", justification="center", font=("Any", 10))],
                 [sg.Text(text="|__________________________________________|", justification="center")],
@@ -173,25 +170,6 @@ memBlock6 = [ [sg.Text(text="Address:", justification="left", font=("Any", 10)),
 memBlock7 = [ [sg.Text(text="Address:", justification="left", font=("Any", 10)), sg.Text(text="7", justification="right", font=("Any", 10))],
               [sg.Text(text="Value:", justification="left", font=("Any", 10)), sg.Text(text="0000", justification="right", font=("Any", 10), key="memValue7")] ]
 
-"""
-statusHub = [ [sg.Text(text="Last instruction generated: ", size=(20, 1), justification="left", font=("Any", 10)), 
-               sg.Text(text="XX: XXXXX XXX;XXXX", justification="center", font=("Any", 10), key="lastInstruction")],
-              [sg.Text(text="Next Instruction: ", size=(20, 1), justification="right", font=("Any", 10)), 
-               sg.Text(text="XX: XXXXX XXX;XXXX", justification="center", font=("Any", 10), key="nextInstruction")]]
-
-controlHub = [[sg.Text(text="General Controllers: ", size=(15, 1), justification="left", font=("Any", 10)),
-               sg.Button(button_text="Pause", font=("Any", 10), disabled=False, key="pauseB"), 
-               sg.Button(button_text="Step", font=("Any", 10), disabled=False, key="stepB")],
-
-              [sg.Text(text="Add Instruction: ", size=(15, 1), justification="left", font=("Any", 10)),
-               sg.InputText(disabled=False, key="newInstructionIn"), 
-               sg.Button(button_text="Add", font=("Any", 10), disabled=False, key="addInstructionB")],
-
-              [sg.Text(text="Select Mode: ", size=(15, 1), justification="left", font=("Any", 10)),
-               sg.Button(button_text="Continuos Individual Execution", font=("Any", 10), disabled=False, key="individualB"), 
-               sg.Button(button_text="Continuous Simultaneous Execution", font=("Any", 10), disabled=False, key="simultaneousB")]]
-"""
-
 # Define main layout
 layout = [
     [sg.Text(text="General Controllers: ", size=(15, 1), justification="left", font=("Any", 10)),
@@ -212,6 +190,7 @@ layout = [
      sg.InputText(disabled=False, key="executionTimeIn"), 
      sg.Button(button_text="Change Time", font=("Any", 10), disabled=False, key="changeExecutionTimeB")],
 
+    [sg.Text(text="Status: ", size=(20, 1), justification="left", font=("Any", 10, "bold"))],
     [sg.Text(text="Last instruction generated: ", size=(20, 1), justification="left", font=("Any", 10)), 
      sg.Text(text="XX: XXXXX XXX;XXXX", justification="center", font=("Any", 10), key="lastInstruction")],
     [sg.Text(text="Next Instruction: ", size=(20, 1), justification="right", font=("Any", 10)), 
