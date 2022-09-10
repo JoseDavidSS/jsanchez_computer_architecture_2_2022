@@ -1,4 +1,7 @@
 import PySimpleGUI as sg
+from Tools import *
+
+from entities.Tools.tools import updateL1Data
 
 # UI element declaration
 sg.theme("SandyBeach")
@@ -226,6 +229,9 @@ def main():
         event, values = window.read(timeout=100)
         if event == sg.WIN_CLOSED or event == "Cancel":
             break
+        if event == "pauseB":
+            updateL1Data(window)
+
     window.close()
 
 if __name__ == "__main__":    
