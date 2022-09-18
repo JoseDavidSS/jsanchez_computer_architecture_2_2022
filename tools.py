@@ -1,3 +1,27 @@
+# Analyze instruction for each processors' delivery, gets instruction and instructionHolder as args.
+def analyzeInstruction(instruction, procinstrdata):
+    procesor = instruction[:2]
+
+    if (procesor == "p0"):
+        procinstrdata.setInstruction0(instruction[4:])
+        procinstrdata.setInstruction0Read(0)
+        return 0
+    elif (procesor == "p1"):
+        procinstrdata.setInstruction1(instruction[4:])
+        procinstrdata.setInstruction1Read(0)
+        return 0
+    elif (procesor == "p2"):
+        procinstrdata.setInstruction2(instruction[4:])
+        procinstrdata.setInstruction2Read(0)
+        return 0
+    elif (procesor == "p3"):
+        procinstrdata.setInstruction3(instruction[4:])
+        procinstrdata.setInstruction3Read(0)
+        return 0
+    else:
+        print("Not a valid instruction, processor's name is wrong.\n")
+        return 1
+
 # Hexadecimal dictionary for convertion purposes.
 hexadecimalDictionary = {"0": 0,
                          "1": 1,

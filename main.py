@@ -1,7 +1,15 @@
 import PySimpleGUI as sg
 from Tools import *
+from multiprocessing import Process, Manager, Value, Lock
+from tools import updateL1Data
+import instructionGenerator as instGen
 
-from entities.Tools.tools import updateL1Data
+from multiprocessing import Process, Manager, Value, Lock
+import l1cache as l1c
+import l1cacheDataHolder as l1cdh
+import memory as mem
+import instructionHolder as ih
+import control as ctrl
 
 # UI element declaration
 sg.theme("SandyBeach")
@@ -222,8 +230,32 @@ layout = [
 # Define window GUI with title
 window = sg.Window(title="MESI Protocol for Multiprocessor Systems", layout=layout)
 
+def pruebaAux(l1cacheDataHolder, memory, instructionHolder):
+    control = ctrl.Control(l1cacheDataHolder, memory, instructionHolder)
+    print(control.l1cache.l1BlocksDictionary.get(3).coherence)
+
+def prueba(l1cacheDataHolder, memory, instructionHolder):
+    Process(target=pruebaAux, args=(l1cacheDataHolder, memory, instructionHolder,), daemon=True).start()
+    return
+
 # Main function of this program
 def main():
+    # Testing class
+    manager = Manager()
+    memory = mem.Memory(manager)
+    l1cacheDataHolder = l1cdh.L1CacheDataHolder(manager)
+    instructionHolder = ih.InstructionsHolder(manager)
+    prueba(l1cacheDataHolder, memory, instructionHolder)
+
+
+
+    mutex = Lock()
+
+    generator = instGen.InstructionGenerator()
+    instruction = ""
+    pause = True
+    individual = True
+
 
     while True:
         event, values = window.read(timeout=100)

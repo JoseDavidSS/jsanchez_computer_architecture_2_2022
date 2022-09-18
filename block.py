@@ -1,5 +1,4 @@
 # Atomic class for memory blocks
-
 class Block:
     def __init__(self, number, data):
         self.number = number

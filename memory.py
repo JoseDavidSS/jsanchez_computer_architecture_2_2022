@@ -1,6 +1,7 @@
-from entities.IPs import block as bl
+import block as bl
 from multiprocessing import Manager
 
+# Shared memory class between L1 cache memories.
 class Memory():
     def __init__(self, manager):
         self.block0 = bl.Block(manager.Value("i", 0), manager.Value("i", 0))

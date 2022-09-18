@@ -1,3 +1,4 @@
+# Atomic class for L1 cache memory
 class L1Block():
     def __init__(self, number, data, coherence, address):
 
