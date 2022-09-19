@@ -4,10 +4,10 @@ import l1block as l1bl
 class L1Cache:
     def __init__(self):
         # Block definition: Number, Data, Coherence, Address.
-        self.l1block0 = l1bl.L1Block(0, 00, "0", 0)
-        self.l1block1 = l1bl.L1Block(1, 11, "1", 1)
-        self.l1block2 = l1bl.L1Block(2, 22, "2", 2)
-        self.l1block3 = l1bl.L1Block(3, 33, "3", 3)
+        self.l1block0 = l1bl.L1Block(0, 0, "I", 0)
+        self.l1block1 = l1bl.L1Block(1, 0, "I", 0)
+        self.l1block2 = l1bl.L1Block(2, 0, "I", 0)
+        self.l1block3 = l1bl.L1Block(3, 0, "I", 0)
 
         self.l1BlocksDictionary = {
                                     0: self.l1block0,

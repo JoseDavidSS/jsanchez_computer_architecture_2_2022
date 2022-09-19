@@ -233,6 +233,11 @@ window = sg.Window(title="MESI Protocol for Multiprocessor Systems", layout=layo
 def pruebaAux(l1cacheDataHolder, memory, instructionHolder):
     control = ctrl.Control(l1cacheDataHolder, memory, instructionHolder)
     print(control.l1cache.l1BlocksDictionary.get(3).coherence)
+    control.handleOperation("R", 0, 4, 3)
+    print((control.l1getCoherenceDictionaryP0[0]()))
+    print((control.l1getAddressDictionaryP0[0]()))
+    print((control.l1getDataDictionaryP0[0]()))
+    control.handleOperation("R", 1, 4, 3)
 
 def prueba(l1cacheDataHolder, memory, instructionHolder):
     Process(target=pruebaAux, args=(l1cacheDataHolder, memory, instructionHolder,), daemon=True).start()
