@@ -238,6 +238,7 @@ def pruebaAux(l1cacheDataHolder, memory, instructionHolder):
     print((control.l1getAddressDictionaryP0[0]()))
     print((control.l1getDataDictionaryP0[0]()))
     control.handleOperation("R", 1, 4, 3)
+    print(control.memory.blocksDictionary[4].getData())
 
 def prueba(l1cacheDataHolder, memory, instructionHolder):
     Process(target=pruebaAux, args=(l1cacheDataHolder, memory, instructionHolder,), daemon=True).start()

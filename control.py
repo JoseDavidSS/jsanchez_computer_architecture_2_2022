@@ -1,10 +1,4 @@
-from ast import Add
-from audioop import add
-from email.headerregistry import Address
 import l1cache as l1c
-
-import random
-import time
 
 class Control:
     def __init__(self, l1cacheDataHolder, memory, instructionsHolder):
@@ -160,7 +154,6 @@ class Control:
 
     def updateLocalCache(self, processorNumber): 
         l1blocks = self.l1cache.getAllBlocks()
-
         if (processorNumber == 0):
             for l1block in l1blocks:
                 l1block.setCoherence(self.l1getCoherenceDictionaryP0.get(l1block.number)())
@@ -219,23 +212,6 @@ class Control:
             print("Something went wrong Updating Holder Cache!")
             return
 
-    def invalidateHolderCache(self, processorNumber, l1block):
-        if (processorNumber == 0):
-            self.l1setCoherenceDictionaryP0.get(l1block.number)("I")
-            return
-        elif (processorNumber == 1):
-            self.l1setCoherenceDictionaryP1.get(l1block.number)("I")
-            return
-        elif (processorNumber == 2):
-            self.l1setCoherenceDictionaryP2.get(l1block.number)("I")
-            return
-        elif (processorNumber == 3):
-            self.l1setCoherenceDictionaryP3.get(l1block.number)("I")
-            return
-        else:
-            print ("Something went wrong Invalidating Holder Cache!")
-            return
-
     def handleRead(self, processorNumber, address):
         l1cacheBlocks = self.l1cache.getAllBlocks()
         # Check for hits and misses inside local cache
@@ -243,6 +219,9 @@ class Control:
             # in case of a miss read, call cache holder if not in local blocks
             # Read Hits
             if l1cacheBlock.address == address and (l1cacheBlock.coherence == "M" or l1cacheBlock.coherence == "E" or l1cacheBlock.coherence == "S"):
+                
+                # Agregar casos para cada estado local en caso de hit
+                
                 print("P" + str(processorNumber) + ": Read Hit from local Cache L1\n")
                 return l1cacheBlock.getData()
             # Read Miss
@@ -255,7 +234,6 @@ class Control:
         self.checkOtherCaches(processorNumber, address, l1cacheBlock) # Check other caches with l1cacheDataHolder
         return 
 
-    # Delete returns
     def checkOtherCaches(self, processorNumber, address, l1cacheBlock):
         changes = 0
         # Time to search in other caches.
@@ -427,5 +405,94 @@ class Control:
         self.updateLocalCache(processorNumber)
         return 
 
-    def handleWrite():
+    def handleWrite(self, processorNumber, address, data):
+        l1cacheBlocks = self.l1cache.getAllBlocks()
+        for block in l1cacheBlocks:
+            if block.address == address and block.coherence == "E":
+                block.setCoherence("M")
+                block.setData(data)
+                self.updateLocalCache(processorNumber)
+                self.updateHolderCache(processorNumber)
+                print("P" + str(processorNumber) + ": Write Hit from local Cache L1\n")
+                return
+            elif block.address == address and block.coherence == "M":
+                block.setData(data)
+                self.updateLocalCache(processorNumber)
+                self.updateHolderCache(processorNumber)
+                print("P" + str(processorNumber) + ": Write Hit from local Cache L1\n")
+                return
+            elif block.address == address and block.coherence == "I":
+                block.setCoherence("E")
+                block.setData(data)
+                self.invalidateOtherCaches(processorNumber, address)
+                self.updateLocalCache(processorNumber)
+                self.updateHolderCache(processorNumber)
+                return
+            elif block.address == address and block.coherence == "S":
+                block.setCoherence("M")
+                block.setData(data)
+                self.invalidateOtherCaches(processorNumber, address)
+                self.updateLocalCache(processorNumber)
+                self.updateHolderCache(processorNumber)
+                return
+            else:
+                # Write Miss, write new data in invalid block
+                for block in l1cacheBlocks:
+                    if block.coherence == "I":
+                        block.coherence = "M"
+                        block.address = address
+                        block.data = data
+                        break
+                    else:
+                        pass
+                print("P" + str(processorNumber) + ": Write Miss from local Cache L1\n")
+                print("Writing in Invalid or Shared state block")
+                return
+        return
+
+    def invalidateOtherCaches(self, processorNumber, address):
+        if (processorNumber == 0):
+            for block in self.l1getCoherenceDictionaryP0:
+                if self.l1getAddressDictionaryP1[block]() == address:
+                    self.l1setCoherenceDictionaryP1[block]("I")
+                if self.l1getAddressDictionaryP2[block]() == address:
+                    self.l1setCoherenceDictionaryP2[block]("I")
+                if self.l1getAddressDictionaryP3[block]() == address:
+                    self.l1setCoherenceDictionaryP3[block]("I")
+                else:
+                    print ("P" + str(processorNumber) + ": No blocks to invalidate from other caches in this " + str(block) + " round")
+        elif (processorNumber == 1):
+            for block in self.l1getCoherenceDictionaryP0:
+                if self.l1getAddressDictionaryP0[block]() == address:
+                    self.l1setCoherenceDictionaryP0[block]("I")
+                if self.l1getAddressDictionaryP2[block]() == address:
+                    self.l1setCoherenceDictionaryP2[block]("I")
+                if self.l1getAddressDictionaryP3[block]() == address:
+                    self.l1setCoherenceDictionaryP3[block]("I")
+                else:
+                    print ("P" + str(processorNumber) + ": No blocks to invalidate from other caches in this " + str(block) + " round")
+        elif (processorNumber == 2):
+            for block in self.l1getCoherenceDictionaryP0:
+                if self.l1getAddressDictionaryP0[block]() == address:
+                    self.l1setCoherenceDictionaryP0[block]("I")
+                if self.l1getAddressDictionaryP1[block]() == address:
+                    self.l1setCoherenceDictionaryP1[block]("I")
+                if self.l1getAddressDictionaryP3[block]() == address:
+                    self.l1setCoherenceDictionaryP3[block]("I")
+                else:
+                    print ("P" + str(processorNumber) + ": No blocks to invalidate from other caches in this " + str(block) + " round")
+        elif (processorNumber == 3):
+            for block in self.l1getCoherenceDictionaryP0:
+                if self.l1getAddressDictionaryP0[block]() == address:
+                    self.l1setCoherenceDictionaryP0[block]("I")
+                if self.l1getAddressDictionaryP1[block]() == address:
+                    self.l1setCoherenceDictionaryP1[block]("I")
+                if self.l1getAddressDictionaryP2[block]() == address:
+                    self.l1setCoherenceDictionaryP2[block]("I")
+                else:
+                    print ("P" + str(processorNumber) + ": No blocks to invalidate from other caches in this " + str(block) + " round")
+        else:
+            print("Something went wrong, no processor number specified?")
+            return
+        print ("All L1 Caches' blocks same as address invalidated")
         return
