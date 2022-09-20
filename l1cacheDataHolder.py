@@ -348,7 +348,7 @@ class L1CacheDataHolder():
     def getData32(self):
         return self.data32.value
     def setData32(self, data):
-        self.data30.value = data
+        self.data32.value = data
         return
 
     def getData33(self):
