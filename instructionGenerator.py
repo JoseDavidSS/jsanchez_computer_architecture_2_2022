@@ -62,8 +62,8 @@ class InstructionGenerator:
             return "write " + address + ";" + data
 
 # Testing class.
-generator = InstructionGenerator()
-print(generator.generateInstructionForProcessor())
-print(generator.generateInstructionForProcessor())
-print(generator.generateInstructionForProcessor())
-print(generator.generateInstructionForProcessor())
+#generator = InstructionGenerator()
+#print(generator.generateInstructionForProcessor())
+#print(generator.generateInstructionForProcessor())
+#print(generator.generateInstructionForProcessor())
+#print(generator.generateInstructionForProcessor())
