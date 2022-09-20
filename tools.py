@@ -124,7 +124,7 @@ def updateMemoryData(window, memory):
     return
 
 def updateL1Data(window, l1cachedata, procinstrdata):
-    window["tiempoactual"].update(procinstrdata.getInstructionTime())
+    window["currentTime"].update(procinstrdata.getInstructionTime())
     # For P0:
     window["instructionP0"].update(procinstrdata.getInstruction0())
     window["lastInstructionP0"].update(procinstrdata.getOldInstruction0())
@@ -139,7 +139,7 @@ def updateL1Data(window, l1cachedata, procinstrdata):
 
     window["l1coherenceP0B2"].update(l1cachedata.getCoherence02())
     window["l1addressP0B2"].update(decimalToBinary(l1cachedata.getAddress02()))
-    window["l1dato00"].update(decimalToHexadecimal(l1cachedata.getData02()))
+    window["l1valueP0B2"].update(decimalToHexadecimal(l1cachedata.getData02()))
 
     window["l1coherenceP0B3"].update(l1cachedata.getCoherence03())
     window["l1addressP0B3"].update(decimalToBinary(l1cachedata.getAddress03()))
