@@ -275,6 +275,7 @@ class Control:
                     self.updateHolderCache(processorNumber)
                     self.updateLocalCache(processorNumber)
                     changes = 1
+            print ("This " + str(address)+ " memory is: " + str(self.memory.blocksDictionary[address].getData()))
             if changes == 1:
                 return
             else:        
@@ -324,6 +325,7 @@ class Control:
                     self.updateHolderCache(processorNumber)
                     self.updateLocalCache(processorNumber)
                     changes = 1
+            print ("This " + str(address)+ " memory is: " + str(self.memory.blocksDictionary[address].getData()))
             if changes == 1:
                 return
             else:        
@@ -368,6 +370,7 @@ class Control:
                     self.updateHolderCache(processorNumber)
                     self.updateLocalCache(processorNumber)
                     changes = 1
+            print ("This " + str(address)+ " memory is: " + str(self.memory.blocksDictionary[address].getData()))
             if changes == 1:
                 return
             else:        
@@ -412,6 +415,7 @@ class Control:
                     self.updateHolderCache(processorNumber)
                     self.updateLocalCache(processorNumber)
                     changes = 1
+            print ("This " + str(address)+ " memory is: " + str(self.memory.blocksDictionary[address].getData()))
             if changes == 1:
                 return
             else:        
@@ -436,34 +440,39 @@ class Control:
         return 
 
     def handleWrite(self, processorNumber, address, data):
+        print("P"+ str(processorNumber) +": Hey! This data value is: " + str(data))
         l1cacheBlocks = self.l1cache.getAllBlocks()
         for block in l1cacheBlocks:
             if block.address == address and block.coherence == "E":
                 block.setCoherence("M")
-                block.setData(data)
+                block.data = data
                 self.updateHolderCache(processorNumber)
                 self.updateLocalCache(processorNumber)
-                print("P" + str(processorNumber) + ": Write Hit from local Cache L1, current state: "+ str(self.l1getCoherenceDictionaryP0[0]()) + "\n")
+
+                #print("P" + str(processorNumber) + ": Write Hit from local Cache L1, current state: "+ str(self.l1getCoherenceDictionaryP0[0]()) + "\n")
                 return
             elif block.address == address and block.coherence == "M":
-                block.setData(data)
+                block.data = data
                 self.updateHolderCache(processorNumber)
                 self.updateLocalCache(processorNumber)
-                print("P" + str(processorNumber) + ": Write Hit from local Cache L1\n")
+
+                #print("P" + str(processorNumber) + ": Write Hit from local Cache L1\n")
                 return
             elif block.address == address and block.coherence == "I":
                 block.setCoherence("E")
-                block.setData(data)
+                block.data = data
                 self.invalidateOtherCaches(processorNumber, address)
                 self.updateHolderCache(processorNumber)
                 self.updateLocalCache(processorNumber)
+
                 return
             elif block.address == address and block.coherence == "S":
                 block.setCoherence("M")
-                block.setData(data)
+                block.data = data
                 self.invalidateOtherCaches(processorNumber, address)
                 self.updateHolderCache(processorNumber)
                 self.updateLocalCache(processorNumber)
+
                 return
             else:
                 # Write Miss, write new data in invalid block
@@ -472,12 +481,16 @@ class Control:
                         block.coherence = "M"
                         block.address = address
                         block.data = data
+                        self.updateHolderCache(processorNumber)
+                        self.updateLocalCache(processorNumber)
+
                         break
                     else:
                         pass
                 print("P" + str(processorNumber) + ": Write Miss from local Cache L1\n")
                 print("Writing in Invalid or Shared state block")
                 return
+        #print("P"+ str(processorNumber) +": Hey! This block data value is: " + str(block.))
         return
 
     def invalidateOtherCaches(self, processorNumber, address):
