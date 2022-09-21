@@ -241,39 +241,40 @@ class Control:
         if (processorNumber == 0):
             for block in self.l1getAddressDictionaryP1:
                 if self.l1getAddressDictionaryP1[block]() == address and (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP1[block]())
                         self.l1setCoherenceDictionaryP1[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP1[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P1 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
+
                     changes = 1
 
                 if self.l1getAddressDictionaryP2[block]() == address and (self.l1getCoherenceDictionaryP2[block]() == "M" or self.l1getCoherenceDictionaryP2[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP2[block]() == "M" or self.l1getCoherenceDictionaryP2[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP2[block]() == "M" or self.l1getCoherenceDictionaryP2[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP2[block]())
                         self.l1setCoherenceDictionaryP2[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP2[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P2 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
 
                 if self.l1getAddressDictionaryP3[block]() == address and (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP3[block]())
                         self.l1setCoherenceDictionaryP3[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP3[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P3 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
             if changes == 1:
                 return
@@ -285,7 +286,7 @@ class Control:
             for block in self.l1getAddressDictionaryP0:
                 print ("This block is: " + str(block) + " , and address: " + str(self.l1getAddressDictionaryP0[block]()))
                 if self.l1getAddressDictionaryP0[block]() == address and (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() == "S"):
                         
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
@@ -293,33 +294,32 @@ class Control:
                         self.l1setCoherenceDictionaryP0[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP0[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P0 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
-                    break
 
                 if self.l1getAddressDictionaryP2[block]() == address and (self.l1getCoherenceDictionaryP2[block]() == "M" or self.l1getCoherenceDictionaryP2[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP2[block]() == "M" or self.l1getCoherenceDictionaryP2[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP2[block]() == "M" or self.l1getCoherenceDictionaryP2[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP2[block]())
                         self.l1setCoherenceDictionaryP2[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP2[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P2 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
 
                 if self.l1getAddressDictionaryP3[block]() == address and (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP3[block]())
                         self.l1setCoherenceDictionaryP3[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP3[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P3 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
             if changes == 1:
                 return
@@ -331,39 +331,39 @@ class Control:
             for block in self.l1getAddressDictionaryP0:
                 print ("This block is: " + str(block) + " , and address: " + str(self.l1getAddressDictionaryP0[block]()))
                 if self.l1getAddressDictionaryP0[block]() == address and (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP0[block]())
                         self.l1setCoherenceDictionaryP0[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP0[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P0 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
 
                 if self.l1getAddressDictionaryP1[block]() == address and (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP1[block]())
                         self.l1setCoherenceDictionaryP1[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP1[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P1 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
 
                 if self.l1getAddressDictionaryP3[block]() == address and (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP3[block]() == "M" or self.l1getCoherenceDictionaryP3[block]() == "E" or self.l1getCoherenceDictionaryP3[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP3[block]())
                         self.l1setCoherenceDictionaryP3[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP3[block]())
                     print("P" + str(processorNumber) + ": Read Miss from Local Cache but Read Hit from P3 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
             if changes == 1:
                 return
@@ -375,27 +375,27 @@ class Control:
             for block in self.l1getAddressDictionaryP0:
                 print ("This block is: " + str(block) + " , and address: " + str(self.l1getAddressDictionaryP0[block]()))
                 if self.l1getAddressDictionaryP0[block]() == address and (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP0[block]() == "M" or self.l1getCoherenceDictionaryP0[block]() == "E" or self.l1getCoherenceDictionaryP0[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP0[block]())
                         self.l1setCoherenceDictionaryP0[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP0[block]())
                     print("P" + str(processorNumber) + ": Read Hit from P0 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
 
                 if self.l1getAddressDictionaryP1[block]() == address and (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() == "S"):
-                    if (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() != "S"):
+                    if (self.l1getCoherenceDictionaryP1[block]() == "M" or self.l1getCoherenceDictionaryP1[block]() == "E" or self.l1getCoherenceDictionaryP1[block]() == "S"):
                         self.l1cache.getL1BlockByNumber(block).setCoherence("S")
                         self.l1cache.getL1BlockByNumber(block).setAddress(address)
                         self.l1cache.getL1BlockByNumber(block).setData(self.l1getDataDictionaryP1[block]())
                         self.l1setCoherenceDictionaryP1[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP1[block]())
                     print("P" + str(processorNumber) + ": Read Hit from P1 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
 
                 if self.l1getAddressDictionaryP2[block]() == address and (self.l1getCoherenceDictionaryP2[block]() == "M" or self.l1getCoherenceDictionaryP2[block]() == "E" or self.l1getCoherenceDictionaryP2[block]() == "S"):
@@ -406,8 +406,8 @@ class Control:
                         self.l1setCoherenceDictionaryP2[block]("S")
                         self.memory.blocksDictionary[address].setData(self.l1getDataDictionaryP2[block]())
                     print("P" + str(processorNumber) + ": Read Hit from P2 Cache L1\n")
-                    self.updateLocalCache(processorNumber)
                     self.updateHolderCache(processorNumber)
+                    self.updateLocalCache(processorNumber)
                     changes = 1
             if changes == 1:
                 return
@@ -493,8 +493,8 @@ class Control:
     def invalidateOtherCaches(self, processorNumber, address, data):
         if (processorNumber == 0):
             for block in self.l1getCoherenceDictionaryP0:
-                if self.l1getAddressDictionaryP0[block]() == address and self.l1getAddressDictionaryP0[block]() != data:
-                    self.l1setCoherenceDictionaryP0[block]("I")
+                if self.l1getAddressDictionaryP0[block]() == address and self.l1getAddressDictionaryP0[block]() == data:
+                    self.l1setCoherenceDictionaryP0[block]("M")
                 if self.l1getAddressDictionaryP1[block]() == address:
                     self.l1setCoherenceDictionaryP1[block]("I")
                 if self.l1getAddressDictionaryP2[block]() == address:
@@ -508,8 +508,8 @@ class Control:
             for block in self.l1getCoherenceDictionaryP0:
                 if self.l1getAddressDictionaryP0[block]() == address:
                     self.l1setCoherenceDictionaryP0[block]("I")
-                if self.l1getAddressDictionaryP1[block]() == address and self.l1getAddressDictionaryP1[block]() != data:
-                    self.l1setCoherenceDictionaryP1[block]("I")
+                if self.l1getAddressDictionaryP1[block]() == address and self.l1getAddressDictionaryP1[block]() == data:
+                    self.l1setCoherenceDictionaryP1[block]("M")
                 if self.l1getAddressDictionaryP2[block]() == address:
                     self.l1setCoherenceDictionaryP2[block]("I")
                 if self.l1getAddressDictionaryP3[block]() == address:
@@ -523,8 +523,8 @@ class Control:
                     self.l1setCoherenceDictionaryP0[block]("I")
                 if self.l1getAddressDictionaryP1[block]() == address:
                     self.l1setCoherenceDictionaryP1[block]("I")
-                if self.l1getAddressDictionaryP2[block]() == address and self.l1getAddressDictionaryP2[block]() != data:
-                    self.l1setCoherenceDictionaryP2[block]("I")
+                if self.l1getAddressDictionaryP2[block]() == address and self.l1getAddressDictionaryP2[block]() == data:
+                    self.l1setCoherenceDictionaryP2[block]("M")
                 if self.l1getAddressDictionaryP3[block]() == address:
                     self.l1setCoherenceDictionaryP3[block]("I")
                 else:
@@ -538,8 +538,8 @@ class Control:
                     self.l1setCoherenceDictionaryP1[block]("I")
                 if self.l1getAddressDictionaryP2[block]() == address:
                     self.l1setCoherenceDictionaryP2[block]("I")
-                if self.l1getAddressDictionaryP3[block]() == address and self.l1getAddressDictionaryP3[block]() != data:
-                    self.l1setCoherenceDictionaryP3[block]("I")
+                if self.l1getAddressDictionaryP3[block]() == address and self.l1getAddressDictionaryP3[block]() == data:
+                    self.l1setCoherenceDictionaryP3[block]("M")
                 else:
                     print ("P" + str(processorNumber) + ": No blocks to invalidate from other caches in this " + str(block) + " round")
             return
